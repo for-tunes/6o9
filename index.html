@@ -3,38 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>自己分析</title>
+    <title>個性分析システム</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <header>
-        <h1>自己分析システム</h1>
-        <p>生年月日から導き出す真実</p>
-<br>
-	<p>あなたの持つ運命と能力の素質を生年月日から分析します</p>
+        <h1>個性分析システム</h1>
+        <p>生年月日からあなたの生まれ持った本質と運命を紐解く</p>
     </header>
 
     <main>
         <section id="input-section" class="card">
-            <h2>生年月日を選択してください</h2>
+            <h2>生年月日を選択</h2>
             <form id="fortune-form">
                 <div class="date-inputs">
                     <select id="year"></select>
                     <select id="month"></select>
                     <select id="day"></select>
                 </div>
-                <button type="submit" id="submit-btn">鑑定する</button>
+                <button type="submit" id="submit-btn">鑑定を開始する</button>
             </form>
         </section>
 
         <div id="loading" class="hidden">
             <div class="spinner"></div>
-            <p>生年月日データから分析中...</p>
+            <p>分析中...</p>
         </div>
 
         <section id="result-section" class="hidden">
-            
             <div class="card">
                 <h3>基本特性</h3>
                 <div class="info-row"><span class="label">グループ：</span><span id="res-group" class="val"></span></div>
@@ -42,6 +38,10 @@
                 <div class="info-row"><span class="label">魂の性質：</span><span id="res-soul" class="val big-val"></span></div>
                 <div class="info-row"><span class="label">与えられた使命：</span><span id="res-mission" class="val"></span></div>
                 <div class="info-row"><span class="label">生まれ持ったアビリティ：</span><span id="res-ability" class="val"></span></div>
+            </div>
+
+            <div id="image-container" class="card hidden" style="text-align: center;">
+                <img id="res-image" src="" alt="鑑定結果イメージ" style="width:100%; max-width:400px; border-radius:8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
             </div>
 
             <div class="card">
@@ -52,7 +52,7 @@
             <div class="card">
                 <h3>総合能力値</h3>
                 <div class="total-power-grid">
-                    <div class="power-item"><span>総合突破力(カリスマ性)</span><strong id="res-charisma"></strong></div>
+                    <div class="power-item"><span>総合突破力(カリスマ)</span><strong id="res-charisma"></strong></div>
                     <div class="power-item"><span>総合推進力(分析力)</span><strong id="res-analysis"></strong></div>
                     <div class="power-item"><span>総合協調力(コミュ力)</span><strong id="res-communication"></strong></div>
                 </div>
@@ -70,25 +70,23 @@
                 </div>
             </div>
 
-           <div class="actions">
-    <div class="share-area">
-        <p>＼ 鑑定結果をシェアする ／</p>
-        <div class="share-btns">
-            <button id="share-x" class="share-btn x-btn">X</button>
-            <button id="share-threads" class="share-btn threads-btn">Threads</button>
-            <button id="share-line" class="share-btn line-btn-sns">LINE</button>
-            <button id="share-inst" class="share-btn inst-btn">Instagram</button>
-        </div>
-    </div>
-    
-    <button id="retry-btn">もう一度占う</button>
-    <button class="line-official-btn" onclick="location.href='https://line.me/R/ti/p/@あなたのID'">
-        公式LINEで詳しく相談する
-    </button>
-</div>
+            <div class="actions">
+                <div class="share-area">
+                    <p>＼ 鑑定結果をシェアする ／</p>
+                    <div class="share-btns">
+                        <button id="share-x" class="share-btn x-btn">X</button>
+                        <button id="share-threads" class="share-btn threads-btn">Threads</button>
+                        <button id="share-line" class="share-btn line-btn-sns">LINE</button>
+                        <button id="share-inst" class="share-btn inst-btn">Instagram</button>
+                    </div>
+                </div>
+                <button id="retry-btn">もう一度占う</button>
+                <button class="line-official-btn" onclick="location.href='https://line.me/R/ti/p/@あなたのID'">
+                    公式LINEで詳しく相談する
+                </button>
+            </div>
         </section>
     </main>
-
     <script src="script.js"></script>
 </body>
 </html>

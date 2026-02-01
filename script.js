@@ -1,4 +1,4 @@
-const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwpZmFzL1kBdwtah0kDx8chT8EyJFlNoUvuF1GpO0vhXMz4lU93IIOWbf_Y7wEpLAXXtg/exec';
+const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbzZJWxcpZTwkUcvDxwQYyB820aLHv7uYLQhWhN4VTbGQTRNMUQj4dv4nvnwOibUoNqbCg/exec';
 
 document.addEventListener('DOMContentLoaded', () => {
     initDateSelects();
@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
         inputSec.classList.add('hidden');
         loading.classList.remove('hidden');
 
@@ -18,20 +17,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const d = document.getElementById('day').value;
 
         try {
-            // 通信部分
             const response = await fetch(`${GAS_API_URL}?year=${y}&month=${m}&day=${d}`);
             const res = await response.json();
 
             if (res.data) {
-                // ここで表示関数を呼び出し
                 displayResult(res.data);
+                resultSec.classList.remove('hidden');
             } else {
                 alert("鑑定エラー: " + res.error);
                 inputSec.classList.remove('hidden');
             }
         } catch (err) {
-            console.error(err);
-            alert("通信エラーが発生しました。GASのURLが正しいか、公開設定が『全員』になっているか確認してください。");
+            alert("通信エラーが発生しました。");
             inputSec.classList.remove('hidden');
         } finally {
             loading.classList.add('hidden');
@@ -43,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// 表示に関する関数（1つにまとめました）
 function displayResult(d) {
     // 1. 基本特性
     document.getElementById('res-group').textContent = d.basic.group;
@@ -52,7 +48,17 @@ function displayResult(d) {
     document.getElementById('res-mission').textContent = d.basic.mission;
     document.getElementById('res-ability').textContent = d.basic.ability;
 
-    // 2. 能力傾向
+    // 2. ★画像表示
+    const imgElement = document.getElementById('res-image');
+    const imgContainer = document.getElementById('image-container');
+    if (d.basic.result_image && d.basic.result_image.startsWith('http')) {
+        imgElement.src = d.basic.result_image;
+        imgContainer.classList.remove('hidden');
+    } else {
+        imgContainer.classList.add('hidden');
+    }
+
+    // 3. 能力傾向
     const skillMap = [
         { label: "瞬発力・リスク対応力", val: d.skills.shunpatsu },
         { label: "堅実性・安定力", val: d.skills.kenjitsu },
@@ -63,35 +69,27 @@ function displayResult(d) {
         { label: "環境に合わせたバランス力", val: d.skills.balance }
     ];
     document.getElementById('res-skills').innerHTML = skillMap.map(s => `
-        <div class="skill-item">
-            <span class="label">${s.label}</span>
-            <span class="val">${s.val}</span>
-        </div>
+        <div class="skill-item"><span class="label">${s.label}</span><span class="val">${s.val}</span></div>
     `).join('');
 
-    // 3. 総合能力
+    // 4. 総合能力
     document.getElementById('res-charisma').textContent = d.total_power.charisma;
     document.getElementById('res-analysis').textContent = d.total_power.analysis;
     document.getElementById('res-communication').textContent = d.total_power.communication;
 
-    // 4. 鑑定文
+    // 5. 鑑定文
     document.getElementById('res-catchcopy').textContent = d.reading.catchcopy;
     document.getElementById('res-essence').textContent = d.reading.essence;
     document.getElementById('res-life-character').textContent = d.reading.life_character;
 
-    // 5. SNSボタンの設定を呼び出す
+    // 6. SNSボタン設定を呼び出し
     setupShareButtons(d);
-
-    // 6. 結果画面を表示
-    document.getElementById('result-section').classList.remove('hidden');
 }
-
-// ...冒頭のURL部分はあなたの今のものをそのまま使ってください...
 
 function setupShareButtons(d) {
     const title = "【精密運命鑑定】";
-    const shareText = `${title}\n私の魂の性質は「${d.basic.soul}」、タイプは「${d.basic.type}」でした！\n${d.reading.catchcopy}\n`;
-    const shareUrl = window.location.href; 
+    const shareText = `${title}\n魂の性質は「${d.basic.soul}」、タイプは「${d.basic.type}」でした！\n${d.reading.catchcopy}\n`;
+    const shareUrl = window.location.href;
     const fullText = shareText + shareUrl;
 
     const btnX = document.getElementById('share-x');
@@ -99,38 +97,19 @@ function setupShareButtons(d) {
     const btnLine = document.getElementById('share-line');
     const btnInst = document.getElementById('share-inst');
 
-    // ボタンが存在する場合のみ動作を設定する（エラー防止）
-    if(btnX) {
-        btnX.onclick = () => {
-            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(fullText)}`;
-            window.open(url, '_blank');
-        };
-    }
-    if(btnThreads) {
-        btnThreads.onclick = () => {
-            const url = `https://www.threads.net/intent/post?text=${encodeURIComponent(fullText)}`;
-            window.open(url, '_blank');
-        };
-    }
-    if(btnLine) {
-        btnLine.onclick = () => {
-            const url = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
-            window.open(url, '_blank');
-        };
-    }
+    if(btnX) btnX.onclick = () => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(fullText)}`, '_blank');
+    if(btnThreads) btnThreads.onclick = () => window.open(`https://www.threads.net/intent/post?text=${encodeURIComponent(fullText)}`, '_blank');
+    if(btnLine) btnLine.onclick = () => window.open(`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`, '_blank');
     if(btnInst) {
         btnInst.onclick = () => {
             navigator.clipboard.writeText(fullText).then(() => {
-                alert("鑑定結果をコピーしました！Instagramを開きますので、貼り付けてください。");
+                alert("鑑定結果をコピーしました！Instagramを開きます。");
                 window.location.href = "instagram://camera";
-            }).catch(() => {
-                window.location.href = "https://www.instagram.com/";
-            });
+            }).catch(() => { window.location.href = "https://www.instagram.com/"; });
         };
     }
 }
 
-// 日付セレクトボックスの初期化
 function initDateSelects() {
     const yS = document.getElementById('year'), mS = document.getElementById('month'), dS = document.getElementById('day');
     for(let i=new Date().getFullYear(); i>=1940; i--) yS.add(new Option(i+"年", i));
