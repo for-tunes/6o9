@@ -1,4 +1,4 @@
-const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbz6N1eari2LQjnK6z7olFvhoWprIQA-D7ZHxujYRsc23BY5bY-uBsGozxIXFsHfbwBz0w/exec';
+const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbzNVIlRuXTLNOzzVr4FxpLhDmwOuwZ6iiJDxpwKTOQdAMnnsoyTc3q8AzG_KKcOHfYz/exec';
 
 document.addEventListener('DOMContentLoaded', () => {
     initDateSelects();
