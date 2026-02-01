@@ -86,40 +86,48 @@ function displayResult(d) {
     document.getElementById('result-section').classList.remove('hidden');
 }
 
-// SNSシェアの設定
+// ...冒頭のURL部分はあなたの今のものをそのまま使ってください...
+
 function setupShareButtons(d) {
     const title = "【精密運命鑑定】";
     const shareText = `${title}\n私の魂の性質は「${d.basic.soul}」、タイプは「${d.basic.type}」でした！\n${d.reading.catchcopy}\n`;
     const shareUrl = window.location.href; 
     const fullText = shareText + shareUrl;
 
-    // X (Twitter)
-    document.getElementById('share-x').onclick = () => {
-        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(fullText)}`;
-        window.open(url, '_blank');
-    };
+    const btnX = document.getElementById('share-x');
+    const btnThreads = document.getElementById('share-threads');
+    const btnLine = document.getElementById('share-line');
+    const btnInst = document.getElementById('share-inst');
 
-    // Threads
-    document.getElementById('share-threads').onclick = () => {
-        const url = `https://www.threads.net/intent/post?text=${encodeURIComponent(fullText)}`;
-        window.open(url, '_blank');
-    };
-
-    // LINE
-    document.getElementById('share-line').onclick = () => {
-        const url = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
-        window.open(url, '_blank');
-    };
-
-    // Instagram
-    document.getElementById('share-inst').onclick = () => {
-        navigator.clipboard.writeText(fullText).then(() => {
-            alert("鑑定結果をコピーしました！Instagramを開きますので、ストーリーズや投稿に貼り付けてください。");
-            window.location.href = "instagram://camera";
-        }).catch(() => {
-            window.location.href = "https://www.instagram.com/";
-        });
-    };
+    // ボタンが存在する場合のみ動作を設定する（エラー防止）
+    if(btnX) {
+        btnX.onclick = () => {
+            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(fullText)}`;
+            window.open(url, '_blank');
+        };
+    }
+    if(btnThreads) {
+        btnThreads.onclick = () => {
+            const url = `https://www.threads.net/intent/post?text=${encodeURIComponent(fullText)}`;
+            window.open(url, '_blank');
+        };
+    }
+    if(btnLine) {
+        btnLine.onclick = () => {
+            const url = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
+            window.open(url, '_blank');
+        };
+    }
+    if(btnInst) {
+        btnInst.onclick = () => {
+            navigator.clipboard.writeText(fullText).then(() => {
+                alert("鑑定結果をコピーしました！Instagramを開きますので、貼り付けてください。");
+                window.location.href = "instagram://camera";
+            }).catch(() => {
+                window.location.href = "https://www.instagram.com/";
+            });
+        };
+    }
 }
 
 // 日付セレクトボックスの初期化
