@@ -1,0 +1,85 @@
+:root {
+    --primary: #4a148c;
+    --accent: #d4af37;
+    --bg: #f4f7f6;
+    --text: #333;
+}
+
+body { font-family: "Helvetica Neue", Arial, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+header { background: var(--primary); color: white; text-align: center; padding: 2rem 1rem; }
+main { max-width: 600px; margin: -20px auto 40px; padding: 0 15px; }
+
+.card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
+h3 { border-bottom: 2px solid var(--accent); display: inline-block; font-size: 1rem; margin-bottom: 15px; color: var(--primary); }
+
+/* 入力パーツ */
+.date-inputs { display: flex; gap: 8px; margin-bottom: 20px; }
+select { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 1rem; }
+button { width: 100%; padding: 16px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+#submit-btn { background: var(--primary); color: white; }
+
+/* 鑑定結果リスト形式 */
+.info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #eee; align-items: center; }
+.label { font-size: 0.85rem; color: #666; font-weight: bold; }
+.val { font-weight: bold; color: var(--primary); }
+.highlight-val { background: var(--accent); color: white; padding: 2px 12px; border-radius: 4px; }
+.big-val { font-size: 1.2rem; }
+
+/* 能力値グリッド */
+.skill-list { display: flex; flex-direction: column; gap: 5px; }
+.skill-item { display: flex; justify-content: space-between; background: #fafafa; padding: 8px 12px; border-radius: 6px; }
+
+.total-power-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
+.power-item { background: #f0ebf7; padding: 10px; border-radius: 8px; text-align: center; }
+.power-item span { font-size: 0.65rem; display: block; height: 32px; color: #555; }
+.power-item strong { font-size: 1.3rem; color: var(--primary); }
+
+/* 鑑定文テキスト */
+.catchcopy { color: var(--accent); text-align: center; font-size: 1.4rem; margin: 10px 0 20px; }
+.text-block h3 { border-left: 5px solid var(--accent); border-bottom: none; padding-left: 10px; margin-top: 20px; }
+.text-block p { white-space: pre-wrap; font-size: 0.95rem; color: #444; background: #fffdf0; padding: 15px; border-radius: 8px; }
+
+/* ユーティリティ */
+.hidden { display: none; }
+#loading { text-align: center; padding: 50px; }
+.spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 10px; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.line-btn { background: #06c755; color: white; margin-top: 10px; }
+#retry-btn { background: #666; color: white; }
+
+/* SNSエリア全体の調整 */
+.share-area {
+    margin: 25px 0;
+    padding-top: 20px;
+    border-top: 2px dotted #ddd;
+    text-align: center;
+}
+
+.share-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2列×2行で並べる */
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.share-btn {
+    padding: 12px 5px !important;
+    font-size: 0.85rem !important;
+    border-radius: 6px;
+    color: white !important;
+}
+
+/* 各ブランドカラー */
+.x-btn { background-color: #000000; }
+.threads-btn { background-color: #000000; border: 1px solid #444; }
+.line-btn-sns { background-color: #06c755; }
+.inst-btn { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+
+/* 下部の公式LINEボタンは目立つように別スタイル */
+.line-official-btn {
+    background-color: #06c755;
+    color: white;
+    margin-top: 10px;
+    box-shadow: 0 4px 0 #05a346;
+}
+.line-official-btn:active { transform: translateY(2px); box-shadow: none; }
